@@ -31,6 +31,9 @@ public class SingleLinkedListDemo {
         singleLinkedList.addByOrder(hero1);
         //展示
         singleLinkedList.list();
+        HeroNode heroNode = new HeroNode(6,"张三丰","太极掌门人");
+        singleLinkedList.updated(heroNode);
+        singleLinkedList.list();
     }
 
     //单个节点
@@ -120,6 +123,22 @@ public class SingleLinkedListDemo {
                 temp.next = heroNode;
             }
 
+        }
+        //修改节点信息，跟据no编号来修改，no编号不能改
+        public void updated(HeroNode heroNode){
+            HeroNode temp = head;
+            while (true) {
+                if (temp.no==heroNode.no){
+                    break;
+                }
+                temp=temp.next;
+                if (temp.next==null){
+                    System.out.println("该用户不存在");
+                    return;
+                }
+            }
+            temp.name= heroNode.name;
+            temp.nickname = heroNode.nickname;
         }
 
     }

@@ -138,18 +138,23 @@ public class SingleLinkedListDemo {
         //修改节点信息，跟据no编号来修改，no编号不能改
         public void updated(HeroNode heroNode) {
             HeroNode temp = head;
+            boolean flag = false;
             while (true) {
                 if (temp.no == heroNode.no) {
                     break;
                 }
                 temp = temp.next;
                 if (temp.next == null) {
-                    System.out.println("该用户不存在");
-                    return;
+                    break;
                 }
             }
-            temp.name = heroNode.name;
-            temp.nickname = heroNode.nickname;
+            if (flag){
+                System.out.println("该用户不存在");
+                return;
+            }else {
+                temp.name = heroNode.name;
+                temp.nickname = heroNode.nickname;
+            }
         }
 
         //删除节点功能

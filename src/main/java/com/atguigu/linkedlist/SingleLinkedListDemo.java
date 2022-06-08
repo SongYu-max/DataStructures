@@ -42,8 +42,24 @@ public class SingleLinkedListDemo {
         singleLinkedList.del(4);
         singleLinkedList.del(3);
         singleLinkedList.list();
+        System.out.println("================");
+        int length = getLength(singleLinkedList.getHead());
+        System.out.println("链表有效节点个数为：" + length);
 
+    }
 
+    //链表面试题1：获取单链表的有效节点个数（注意不统计头节点）
+    public static int getLength(HeroNode head) {
+        if (head.next==null){
+            return 0;
+        }
+        HeroNode temp = head;
+        int length = 0;
+        while (temp.next != null) {
+            temp = temp.next;
+            length++;
+        }
+        return length;
     }
 
     //单个节点
@@ -71,8 +87,13 @@ public class SingleLinkedListDemo {
 
     //管理链表
     static class SingleLinkedList {
+
         //定义头节点
         private HeroNode head = new HeroNode(0, "", "");
+
+        public HeroNode getHead() {
+            return head;
+        }
 
         //添加节点到单向链表
         public void add(HeroNode node) {
@@ -148,10 +169,10 @@ public class SingleLinkedListDemo {
                     break;
                 }
             }
-            if (flag){
+            if (flag) {
                 System.out.println("该用户不存在");
                 return;
-            }else {
+            } else {
                 temp.name = heroNode.name;
                 temp.nickname = heroNode.nickname;
             }

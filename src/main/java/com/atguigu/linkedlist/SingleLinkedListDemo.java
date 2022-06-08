@@ -31,9 +31,19 @@ public class SingleLinkedListDemo {
         singleLinkedList.addByOrder(hero1);
         //展示
         singleLinkedList.list();
-        HeroNode heroNode = new HeroNode(6,"张三丰","太极掌门人");
+        System.out.println("================");
+        HeroNode heroNode = new HeroNode(6, "张三丰", "太极掌门人");
         singleLinkedList.updated(heroNode);
         singleLinkedList.list();
+        System.out.println("================");
+        HeroNode heroNode2 = new HeroNode(1, "张三丰", "太极掌门人");
+        singleLinkedList.del(2);
+        singleLinkedList.del(1);
+        singleLinkedList.del(4);
+        singleLinkedList.del(3);
+        singleLinkedList.list();
+
+
     }
 
     //单个节点
@@ -124,21 +134,44 @@ public class SingleLinkedListDemo {
             }
 
         }
+
         //修改节点信息，跟据no编号来修改，no编号不能改
-        public void updated(HeroNode heroNode){
+        public void updated(HeroNode heroNode) {
             HeroNode temp = head;
             while (true) {
-                if (temp.no==heroNode.no){
+                if (temp.no == heroNode.no) {
                     break;
                 }
-                temp=temp.next;
-                if (temp.next==null){
+                temp = temp.next;
+                if (temp.next == null) {
                     System.out.println("该用户不存在");
                     return;
                 }
             }
-            temp.name= heroNode.name;
+            temp.name = heroNode.name;
             temp.nickname = heroNode.nickname;
+        }
+
+        //删除节点功能
+        public void del(int no) {
+            HeroNode temp = head;
+            boolean flag = false;
+            while (true) {
+                if (temp.next.no == no) {
+                    break;
+                }
+                if (temp.next == null) {
+                    flag = true;
+                    break;
+                }
+                temp = temp.next;
+            }
+            if (flag) {
+                System.out.println("该用户不存在");
+                return;
+            } else {
+                temp.next = temp.next.next;
+            }
         }
 
     }

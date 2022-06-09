@@ -37,20 +37,24 @@ public class SingleLinkedListDemo {
         singleLinkedList.list();
         System.out.println("================");
         HeroNode heroNode2 = new HeroNode(1, "张三丰", "太极掌门人");
-        singleLinkedList.del(2);
-        singleLinkedList.del(1);
-        singleLinkedList.del(4);
-        singleLinkedList.del(3);
+//        singleLinkedList.del(2);
+//        singleLinkedList.del(1);
+//        singleLinkedList.del(4);
+//        singleLinkedList.del(3);
         singleLinkedList.list();
         System.out.println("================");
         int length = getLength(singleLinkedList.getHead());
         System.out.println("链表有效节点个数为：" + length);
+        System.out.println("================");
+        HeroNode node = findLastIndexNode(singleLinkedList.getHead(), 2);
+        System.out.println("您所查找的倒数节点为"+node);
+
 
     }
 
     //链表面试题1：获取单链表的有效节点个数（注意不统计头节点）
     public static int getLength(HeroNode head) {
-        if (head.next==null){
+        if (head.next == null) {
             return 0;
         }
         HeroNode temp = head;
@@ -60,6 +64,22 @@ public class SingleLinkedListDemo {
             length++;
         }
         return length;
+    }
+
+    //链表面试题2：查找单链表中的倒数第k个节点【新浪面试题】
+    public static HeroNode findLastIndexNode(HeroNode head, int index) {
+        HeroNode temp = head.next;
+        int length = getLength(head);
+        if (head.next==null){
+            return null;
+        }
+        if (index <= 0 || index > length) {
+            return null;
+        }
+        for (int i = 0; i < length - index; i++) {
+            temp = temp.next;
+        }
+        return temp;
     }
 
     //单个节点

@@ -47,8 +47,10 @@ public class SingleLinkedListDemo {
         System.out.println("链表有效节点个数为：" + length);
         System.out.println("================");
         HeroNode node = findLastIndexNode(singleLinkedList.getHead(), 2);
-        System.out.println("您所查找的倒数节点为"+node);
-
+        System.out.println("您所查找的倒数节点为" + node);
+        System.out.println("================1");
+        reversetList(singleLinkedList.getHead());
+        singleLinkedList.list();
 
     }
 
@@ -70,7 +72,7 @@ public class SingleLinkedListDemo {
     public static HeroNode findLastIndexNode(HeroNode head, int index) {
         HeroNode temp = head.next;
         int length = getLength(head);
-        if (head.next==null){
+        if (head.next == null) {
             return null;
         }
         if (index <= 0 || index > length) {
@@ -80,6 +82,23 @@ public class SingleLinkedListDemo {
             temp = temp.next;
         }
         return temp;
+    }
+
+    //链表面试题3：单链表的反转【腾讯面试题】
+    public static void reversetList(HeroNode head) {
+        if (head.next == null || head.next.next == null) {
+            return;
+        }
+        HeroNode reverseHead = new HeroNode(0, "", "");
+        HeroNode temp = head.next;
+        HeroNode next = null;       //指向当前节temp的下一个节点
+        while (temp != null) {
+            next = temp.next;       //因为下面第1行会把temp后面的节点改变，当下面第4行再取原temp后面的节点时就取不到了
+            temp.next = reverseHead.next;
+            reverseHead.next = temp;
+            temp = next;
+        }
+        head.next = reverseHead.next;
     }
 
     //单个节点

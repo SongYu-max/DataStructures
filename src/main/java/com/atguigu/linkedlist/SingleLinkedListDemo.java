@@ -1,5 +1,7 @@
 package com.atguigu.linkedlist;
 
+import java.util.Stack;
+
 /**
  * @author SongYu
  * @version 1.0.0
@@ -14,9 +16,17 @@ public class SingleLinkedListDemo {
         HeroNode hero2 = new HeroNode(2, "卢俊义", "玉麒麟");
         HeroNode hero3 = new HeroNode(3, "吴用", "智多星");
         HeroNode hero4 = new HeroNode(4, "公孙胜", "入云龙");
+        HeroNode hero5 = new HeroNode(5, "关胜", "大刀");
+        HeroNode hero6 = new HeroNode(6, "林冲", "豹子头");
 
         //创建要给链表
         SingleLinkedList singleLinkedList = new SingleLinkedList();
+        SingleLinkedList singleLinkedList2 = new SingleLinkedList();
+        singleLinkedList2.addByOrder(hero3);
+        singleLinkedList2.addByOrder(hero2);
+        singleLinkedList2.addByOrder(hero5);
+        singleLinkedList2.addByOrder(hero6);
+
 
         //测试普通加入
 //        singleLinkedList.add(hero1);
@@ -25,9 +35,9 @@ public class SingleLinkedListDemo {
 //        singleLinkedList.add(hero4);
         //测试按编号排序加入
         singleLinkedList.addByOrder(hero4);
-        singleLinkedList.addByOrder(hero3);
-        singleLinkedList.addByOrder(hero2);
-        singleLinkedList.addByOrder(hero2);
+//        singleLinkedList.addByOrder(hero3);
+//        singleLinkedList.addByOrder(hero2);
+//        singleLinkedList.addByOrder(hero2);
         singleLinkedList.addByOrder(hero1);
         //展示
         singleLinkedList.list();
@@ -48,8 +58,20 @@ public class SingleLinkedListDemo {
         System.out.println("================");
         HeroNode node = findLastIndexNode(singleLinkedList.getHead(), 2);
         System.out.println("您所查找的倒数节点为" + node);
-        System.out.println("================1");
+        System.out.println("================反转链表");
         reversetList(singleLinkedList.getHead());
+        singleLinkedList.list();
+        System.out.println("================反转打印");
+        backPrintByStack(singleLinkedList.getHead());
+        System.out.println("================合并两个链表");
+        //先把上面反转的链表1再反转回去
+        reversetList(singleLinkedList.getHead());
+        System.out.println("================链表1：");
+        singleLinkedList.list();
+        System.out.println("================链表2：");
+        singleLinkedList2.list();
+        System.out.println("================合并两个链表");
+        mergeLinkedList(singleLinkedList.getHead(),singleLinkedList2.getHead());
         singleLinkedList.list();
 
     }
@@ -100,6 +122,59 @@ public class SingleLinkedListDemo {
         }
         head.next = reverseHead.next;
     }
+
+    //链表面试题4：从尾到头打印单链表【百度面试题，要求方式：1.反向遍历。方式2：Stack栈】
+    //方式1：反向遍历，就是利用上面的reverseList方法将数组反转，缺点是遍历打印完，原链表的顺序也逆转了
+    //方式2：
+    public static void backPrintByStack(HeroNode head) {
+        Stack<HeroNode> stack = new Stack<HeroNode>();
+        HeroNode temp = head.next;
+        if (temp == null) {
+            System.out.println("链表为空，无法打印");
+        } else if (temp.next == null) {
+            System.out.println(temp);
+            return;
+        }
+        while (temp != null) {
+            stack.push(temp);
+            temp = temp.next;
+        }
+        int stackLength = stack.size();
+        for (int i = 0; i < stackLength; i++) {
+            String s = stack.pop().toString();
+            System.out.println(s);
+        }
+    }
+
+    //链表面试题5：合并两个有序的单链表，合并之后的链表依然有序(和并到链表1并返回)
+    public static void mergeLinkedList(HeroNode left, HeroNode right) {
+        if (left.next == null && right.next == null) {
+            System.out.println("链表不能都为空");
+            return;
+        }
+        HeroNode cur1 = left;
+        HeroNode cur2 = right.next;
+        HeroNode t1 = null;
+        HeroNode t2 = null;
+
+        while (cur1 != null) {
+            while (cur2 != null) {
+                t1 = cur2.next;
+                if (cur1.next != null && cur2.no < cur1.next.no) {
+                    t2 = cur1.next;
+                    cur1.next = cur2;
+                    cur2.next = t2;
+                } else if (cur1.next != null && cur2.no > cur1.next.no){
+                    break;
+                }else{
+                    cur1.next = cur2;
+                }
+                cur2 = t1;
+            }
+            cur1 = cur1.next;
+        }
+    }
+
 
     //单个节点
     static class HeroNode {

@@ -10,7 +10,7 @@ package com.atguigu.stack;
 public class Calculator {
     public static void main(String[] args) {
         //模拟运算
-        String expression = "32+2*6-2";
+        String expression = "320/2*6-20";
         //创建两个栈，一个数栈，一个预算符栈
         ArrayStack2 numStack = new ArrayStack2(10);
         ArrayStack2 operStack = new ArrayStack2(10);

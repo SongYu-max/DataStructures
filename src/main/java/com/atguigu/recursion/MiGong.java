@@ -25,8 +25,8 @@ public class MiGong {
         //设置挡板
         map[3][1] = 1;
         map[3][2] = 1;
-        map[3][3] = 1;
-        map[3][4] = 1;
+//        map[3][3] = 1;
+//        map[3][4] = 1;
         //看一下迷宫地图效果
         for (int i = 0; i < map.length; i++) {
             for (int i1 = 0; i1 < map[0].length; i1++) {
@@ -35,7 +35,9 @@ public class MiGong {
             System.out.println();
         }
         //递归找路
-        setWay(map, 1, 1);
+//        setWay(map, 1, 1);
+        //改变策略
+        setWay2(map,1,1);
         System.out.println("看结果");
         //看结果
         for (int i = 0; i < map.length; i++) {
@@ -71,6 +73,32 @@ public class MiGong {
                 } else if (setWay(map, i - 1, j)) {
                     return true;
                 } else if (setWay(map, i, j - 1)) {
+                    return true;
+                } else {
+                    map[i][j] = 3;
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+
+    }
+    //改变找路策略  上 右 下 左
+    public static boolean setWay2(int[][] map, int i, int j) {
+        if (map[6][5] == 2) {
+            return true;
+        } else {
+            if (map[i][j] == 0) {
+                map[i][j] = 2;
+                if (setWay2(map, i - 1, j)) {        //上
+                    return true;
+                } else if (setWay2(map, i, j + 1)) {  //右
+                    return true;
+                } else if (setWay2(map, i + 1, j)) {
+                    return true;
+                } else if (setWay2(map, i, j - 1)) {
                     return true;
                 } else {
                     map[i][j] = 3;
